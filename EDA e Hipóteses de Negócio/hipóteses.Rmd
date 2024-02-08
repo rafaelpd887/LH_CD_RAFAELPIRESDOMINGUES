@@ -1,0 +1,100 @@
+---
+title: "Hipóteses de Negócio"
+author: "rafael pires"
+date: "2024-02-08"
+output: html_document
+---
+
+## Carregando os pacotes e o dataset
+```{r package, message=FALSE, results='hide'}
+pacotes <- c("readr", "dplyr", "ggplot2")
+lapply(pacotes, library, character.only = TRUE)
+```
+```{r load}
+apts <- read_csv("teste_indicium_precificacao.csv")
+```
+
+# Hipóteses de negócio
+
+Apresento a seguir algumas hipóteses de negócio, conforme solicitado no enunciado do desafio. Destaco que todas as hipóteses e suas respectivas respostas são inteiramente baseadas nas informações contidas na planilha "teste_indicium_precificacao".
+
+# Hipótese 1: Qual bairro de Manhattan possui a menor quantidade de private rooms?
+
+Considerando uma empresa que planeja construir apartamentos de múltiplos quartos em Manhattan, com a intenção de alugar cada quarto individualmente, qual bairro do distrito de Manhattan apresentaria a menor concorrência para o aluguel desses imóveis?
+
+```{r analise1}
+# Filtrando o dataset
+manhattan_private <- apts %>%
+  filter(bairro_group == 'Manhattan', room_type == 'Private room')
+
+# Agrupando por bairro e número de apts
+manhattan_private_min <- manhattan_private %>%
+  group_by(bairro) %>%
+  summarise(count = n())
+
+# Buscando o bairro com o menor número de private rooms
+bairro_min <- manhattan_private_min %>%
+  filter(count == min(count))
+
+# Mostrando o bairro com o menor número de private rooms
+bairro_min
+```
+
+Depois de filtrar o conjunto de dados para extrair informações pertinentes à esta hipótese de negócio, observamos que os bairros de NoHo (North of Houston Street) e Marble Hill apresentam a menor quantidade de private rooms, com apenas 7 em cada, em comparação com o restante do distrito de Manhattan.
+
+Portanto, concluímos que, se uma empresa de construção civil estiver considerando a construção de apartamentos para locação no modelo de quarto privado (private room), os bairros de NoHo e Marble Hill seriam as opções com a menor concorrência.
+
+# Hipótese 2: Onde estão localizados os imóveis mais baratos de Nova York?
+
+Um empresário, cujo principal ramo de negócios envolve a compra de apartamentos de baixo valor para reformá-los e vendê-los a um preço mais elevado, está considerando expandir suas operações para a cidade de Nova York. Supondo que ele pretenda começar adquirindo os imóveis mais acessíveis da cidade, qual bairro seria o ponto de partida ideal para sua busca por propriedades para compra?
+
+```{r analise2}
+# Calculando o IQR do preço
+IQR <- IQR(apts$price)
+
+# Calculando o limite inferior (0,01) do preço
+limite_inferior_price <- quantile(apts$price, 0.01) - 1.5 * IQR
+
+# Identificando os apts mais "baratos" da cidade
+apts$outlier <- ifelse(apts$price > limite_inferior_price, 1, 0)
+outliers <- apts[apts$outlier == 1, ]
+
+# Contando a quantidade de apts baratos por bairro
+apts_baratos_por_bairro <- table(outliers$bairro)
+
+# Encontrando o bairro com a maior quantidade de outliers
+bairro_mais_barato <- names(which.max(apts_baratos_por_bairro))
+bairro_mais_barato
+
+```
+
+Após a identificação dos valores que estão abaixo do limite inferior, que foi definido como o percentil 1 da variável "price"’ subtraído de 1,5 vezes o IQR, conclui-se que o bairro de Williamsburg, situado no distrito de Brooklyn, apresenta a maior concentração dos imóveis mais baratos da cidade de Nova York.
+
+Portanto, pode-se afirmar que, de acordo com o dataset fornecido, um empresário com os objetivos anteriormente descritos deveria iniciar sua busca por imóveis para compra no bairro de Williamsburg.
+
+# Hipótese 3: Qual ou quais distritos possuem a maior quantidade de apartamentos com disponibilidade inferior a 30 dias?
+
+O conjunto de dados fornecido apresenta vários apartamentos com baixa disponibilidade ao longo do ano. Assim, o distrito de Nova York que possui o maior número de apartamentos com baixa disponibilidade para aluguel representa uma oportunidade de negócio imediata.
+
+Logo, supondo que um indivíduo deseje investir seu capital na construção de um apartamento para ser alugado por períodos prolongados (períodos superiores a 30 dias), em qual distrito de Nova York ele provavelmente encontrará uma demanda maior por seu futuro imóvel?
+
+```{r analise3}
+# Filtrando os apartamentos com disponibilidade inferior a 31 dias
+apts_baixa_disponibilidade <- apts[apts$disponibilidade_365 < 31, ]
+
+# Contando a quantidade de apartamentos por distrito ("bairro_group")
+apts_por_distrito <- table(apts_baixa_disponibilidade$bairro_group)
+
+# Encontrando o distrito com a maior quantidade de apartamentos com baixa disponibilidade (<31)
+distrito_baixa_disp <- names(which.max(apts_por_distrito))
+
+table(apts_baixa_disponibilidade$bairro_group)
+
+distrito_baixa_disp
+
+```
+
+Em seguida a esta análise, identificamos que os distritos de Brooklyn e Manhattan possuem a maior quantidade de apartamentos com baixa disponibilidade na cidade de Nova York, sendo que Manhattan apresenta uma quantidade ligeiramente superior à de Brooklyn.
+
+Consequentemente, fica evidente que a construção de um apartamento destinado a aluguéis de longos períodos tende a ser mais requisitada nos distritos de Manhattan e Brooklyn.
+
