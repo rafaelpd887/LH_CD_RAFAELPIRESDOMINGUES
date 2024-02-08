@@ -1,0 +1,90 @@
+---
+title: "EDA"
+author: "rafael pires"
+date: "2024-02-07"
+output: html_document
+---
+# Carregando pacotes
+```{r package, message=FALSE, results='hide'}
+pacotes <- c("readxl", "PerformanceAnalytics", "readr")
+lapply(pacotes, library, character.only = TRUE)
+```
+
+# Carregando e olhando os dados originais
+```{r load}
+apts <- read_csv("teste_indicium_precificacao.csv")
+head(apts, 5)
+```
+Os dados originais precisam ser ajustados para que um modelo preditivo seja criado a partir deles. Para tal vou eliminar algumas variáveis e dummizar as variáveis categóricas que serão usadas no modelo.
+
+Como o objetivo é prever o preço dos apartamentos, decidi eliminar as variáveis que não influenciam o preço.
+
+Com base na minha compreensão do contexto real, deduzi que algumas variáveis, como o número de avaliações mensais (numero_de_reviews) e o nome do proprietário (host_name), entre outras, não têm relevância na determinação do preço. Portanto, decidi excluir essas variáveis do conjunto de dados.
+
+Também optei por remover as variáveis “bairro_group”, “latitude” e “longitude” porque acredito que a maior parte das informações relevantes nessas variáveis já está capturada pela variável “bairro”. Além disso, quando tentei incluir todas essas variáveis no meu modelo preditivo, acredito que complexidades desnecessárias foram criadas, pois a capacidade preditiva do modelo foi afetada negativamente.
+
+# Analisando os níveis de "bairro_group", "bairro" e "room_type"
+```{r analise}
+levels(factor(apts$bairro_group))
+levels(factor(apts$bairro))
+levels(factor(apts$room_type))
+```
+
+Tendo em mente que a variável "bairro" representa uma subdivisão da variável "bairro_group", é natural que a variável "bairro" possua muitos mais niveis/categorias do que "bairro_group". Consequentemente, como as duas variaveis estao relacionadas com a localização do imovel, os niveis da variável "bairro" devem possuir informaçoes mais profundas e especificas relacionadas a precificaçao do imovel. Esse motivo tende a tornar a variável "bairro_group" pouco útil para a previsão dos preços quando na presença da variável "bairro".
+
+# Analisando a frequencia dos níveis/categorias de "bairro_group" e "room_type"
+```{r analise4}
+table(apts$bairro_group)
+table(apts$room_type)
+```
+
+A função 'table' nos permite ver que a maioria dos apartamentos estão localizados no distrito de Manhattan e são  do tipo "Entire home/apt".
+
+# Removendo variáveis que não foram usadas no modelo preditivo
+```{r analise2}
+variaveis_para_remover <- c("id", "nome", "host_id", "host_name", "bairro_group", "latitude", "longitude", "numero_de_reviews", "ultima_review", "reviews_por_mes", "calculado_host_listings_count")
+apts_final <- apts[, -which(names(apts) %in% variaveis_para_remover)]
+```
+Com base nas justificativas apresentadas anteriormente, decidi remover as variáveis do dataset que não foram usadas no modelo preditivo para tornar as próximas análises mais eficientes.
+
+# Analisando algumas estatísticas das variáveis restantes
+```{r analise3}
+summary(apts_final)
+boxplot(apts_final$minimo_noites, main="Boxplot de minimo_noites", ylab="Valores")
+boxplot(apts_final$price, main="Boxplot de price", ylab="Valores")
+```
+
+Ao analisarmos algumas estatísticas das variáveis numéricas, podemos reparar a presença de ouliers nas variáveis "minimo_noites" e "prices". Para tentar obeter uma previsão mais precisa, os outliers que estejam acima dos quartis superiores nessas duas variáveis serão removidos do dataset.
+
+# Matriz de Correlação
+```{r correlation, warning=FALSE}
+chart.Correlation((apts_final[, c(3, 4, 5)]), histogram = TRUE)
+```
+
+A matriz de correlação nos permite observar que as variáveis “minimo_noites” e “disponibilidade_365” têm alguma correlação com a variável “price”. No entanto, essa correlação não é particularmente forte, sugerindo que a localização dos imóveis e o tipo de apartamento (room_type), provavelmente terão um papel mais significativo na previsão do preço pelo modelo.
+
+# Analisando outliers da variável "price"
+
+Por último, como uma das questões do desafio pergunta se existe um padrão no nome dos lugares de mais alto valor, vou separar e analisar os maiores outliers da varável "price".
+
+```{r analise5}
+# Calculando o IQR da variável
+IQR <- IQR(apts$price)
+
+# Calculando o limite superior para outliers
+limite_superior_price <- quantile(apts$price, 0.99) + 1.5 * IQR
+
+# Identificando os outliers
+apts$outlier <- ifelse(apts$price > limite_superior_price, 1, 0)
+outliers <- apts[apts$outlier == 1, ]
+
+# Olhando a frequência dos outliers (alto valor)
+table(outliers$bairro_group)
+
+```
+
+Através dessa análise, podemos ver que a grande maioria dos imóveis de alto valor estão localizados no distrito de Manhattan. 
+
+A análise foi feita separando os outliers que se encontram no 1% superior da variável "price".
+
+Em suma, no conjunto de dados fornecido para o desafio, o número de imóveis de alto valor localizados em Manhattan supera em mais do que o dobro a soma dos imóveis de alto valor encontrados nos outros quatro distritos combinados.
