@@ -1,6 +1,7 @@
 # Desafio Lighthouse - Cientista de Dados
 Abaixo estão as respostas para os itens 2, 3 e 4 do Desafio Lighthouse Cientista de Dados
 
+
 # 2.a. Supondo que uma pessoa esteja pensando em investir em um apartamento para alugar na plataforma, onde seria mais indicada a compra?
 A resposta para essa pergunta depende dos objetivos do comprador. Vou considerar que o comprador deseja maximizar o retorno do aluguel e não está preocupado com o investimento inicial necessário. Acredito que também seja válido considerar a disponibilidade ao responder essa pergunta, uma vez que apartamentos com menor disponibilidade devem ficar alugados por um período maior do ano, gerando, consequentemente, mais lucro para o investidor.
 
@@ -15,3 +16,6 @@ As variáveis referentes ao mínimo de noites e à disponibilidade ao longo do a
 Não tenho certeza se compreendi completamente a pergunta. Não consegui identificar padrões muito claros na variável “nome”. O mais próximo que encontrei de um padrão foi que, entre os 330 apartamentos de maior valor do conjunto de dados (a quantidade de 330 corresponde ao percentil 99 da variável “price”), as palavras “luxury”, “bedroom” e “townhouse” aparecem na variável “nome” em pelo menos 35 apartamentos. O código com as funções que usei para chegar a essa conclusão pode ser visto [aqui](https://rpubs.com/rafaelpd/1147233).
 
 Caso a pergunta esteja relacionada à variável “bairro_group”, durante a minha Análise Exploratória de Dados (EDA), pude constatar que a maioria dos imóveis de alto valor está localizada em Manhattan. Portanto, é possível afirmar que existe um padrão onde a categoria Manhattan da variável “bairro_group” tende a se repetir em imóveis de maior valor.
+
+
+# 3. Explique como vc faria a previsão do preço a partir dos dados. Quais variáveis e/ou suas transformações você utilizou e por quê?
