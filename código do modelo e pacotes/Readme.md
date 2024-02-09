@@ -1,5 +1,5 @@
 # Desafio Lighthouse - Cientista de Dados
-Abaixo estão as respostas para os íten 3 do Desafio Lighthouse Cientista de Dados
+Abaixo estão as respostas para os itens 2, 3 e 4 do Desafio Lighthouse Cientista de Dados
 
 # 2.a. Supondo que uma pessoa esteja pensando em investir em um apartamento para alugar na plataforma, onde seria mais indicada a compra?
 A resposta para essa pergunta depende dos objetivos do comprador. Vou considerar que o comprador deseja maximizar o retorno do aluguel e não está preocupado com o investimento inicial necessário. Acredito que também seja válido considerar a disponibilidade ao responder essa pergunta, uma vez que apartamentos com menor disponibilidade devem ficar alugados por um período maior do ano, gerando, consequentemente, mais lucro para o investidor.
