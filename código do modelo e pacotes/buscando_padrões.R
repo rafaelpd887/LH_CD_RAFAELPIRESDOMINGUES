@@ -12,7 +12,7 @@ nomes <- tm_map(nomes, removeNumbers)                # remove todos os números
 nomes <- tm_map(nomes, removeWords, stopwords("portuguese")) # remove todas as palavras que "pouco" contribuem para o significado do texto 
 
 # Criando uma matriz com os nomes
-matriz_nomes <- DocumentTermMatrix(corpus)
+matriz_nomes <- DocumentTermMatrix(nomes)
 
 # Analisando quais palavras aparecem ao menos 35 vezes nos nomes da matriz
 findFreqTerms(matriz_nomes, lowfreq = 35)
