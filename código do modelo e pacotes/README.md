@@ -1,5 +1,5 @@
 # Desafio Lighthouse - Cientista de Dados
-Abaixo estão as respostas para os itens 2, 3 e 4 do Desafio Lighthouse Cientista de Dados
+Abaixo estão as respostas para os itens 2, 3 e 4 do Desafio Lighthouse Cientista de Dados.
 
 Arquivo .rdata contendo o modelo pode ser baixado [aqui](https://drive.google.com/file/d/1PD8bEIlNgQxHZXGApU667fpE2UEhugYM/view?usp=sharing).
 
