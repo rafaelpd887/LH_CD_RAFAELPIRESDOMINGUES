@@ -31,12 +31,18 @@ A única transformação utilizada foi a dummização (one-hot coding) das vari�
 Estamos resolvendo um problema de regressão porque nossa variável dependente é quantitativa.
 
 # Qual modelo melhor se aproxima dos dados e quais seus prós e contras?
-Em minhas tentativas de prever o preço dos apartamentos usando as variáveis especificadas anteriormente, obtive os melhores resultados utilizando uma regressão linear. Também tentei resolver o problema utilizando floresta aleatória e gradient boosting. Apesar de ter obtido resultados semelhantes com os três modelos, o modelo baseado no algoritmo de regressão linear foi capaz de alcançar medidas de desempenho ligeiramente superiores aos demais.
+Em minhas tentativas de prever o preço dos apartamentos usando as variáveis especificadas anteriormente, obtive os melhores resultados utilizando um modelo XGBoost Tree. Também tentei resolver o problema utilizando floresta aleatória e regressão linear. Dentre os modelos testados, o modelo baseado no algoritmo de XGBoost Tree foi capaz de alcançar medidas de desempenho superiores aos demais.
 
-Entre as vantagens dos modelos de regressão linear estão a simplicidade e, consequentemente, o baixo nível de poder computacional exigido para executá-los. No entanto, suas desvantagens incluem sensibilidade a outliers e multicolinearidade.
+Dentre as vantagens do XGBoost Tree, destacam-se a sua flexibilidade e a capacidade de proporcionar alto desempenho. Por outro lado, suas desvantagens incluem a complexidade inerente ao modelo e a necessidade de considerável capacidade computacional.
 
-É interessante notar que, apesar de “minimo_noites” e “disponibilidade_365” apresentarem uma relação linear fraca com “price”, o modelo linear ainda apresentou os melhores resultados entre os modelos testados. Isso provavelmente ocorreu porque, além de “minimo_noites” e “disponibilidade_365” exercerem uma influência sutil sobre a variável “price”, as variáveis qualitativas “bairro” e “room_type” provavelmente condensavam as informações mais relevantes para o preço dos imóveis. Em resumo, as relações entre as variáveis não são muito complexas e, por esse motivo, um modelo simples como a regressão linear conseguiu capturar bem essas relações, mesmo quando comparado a modelos mais complexos como a floresta aleatória e o gradient boosting, que são indicados para capturar relações mais complexas.
+O XGBoost Tree provavelmente superou os outros modelos testados devido à sua natureza iterativa, que busca minimizar os resíduos a cada nova iteração. Essa característica faz com que o XGBoost Tree se beneficie de conjuntos de dados com um grande número de observações, que é exatamente o caso do conjunto de dados fornecido para o desafio. Portanto, devido aos grandes resíduos apresentados nas primeiras iterações e ao grande volume de observações, é compreensível que este modelo tenha se ajustado bem ao desafio proposto.
 
 # Qual a medida de performance do modelo foi escolhida e por quê?
-A medida de performance utilizada foi o coeficiente de determinação (R²), comummente utilizada na avaliação de modelos de regressão linear. O R² pode ser expresso em um número entre 0 e 1, e expressa a quantidade da variância dos dados que é explicada pelo modelo linear. Logo, quanto mais próximo de 1, maior a quantidade de variância explicada pelo modelo.
+A medida de performance utilizada foi o coeficiente de determinação (R²), comummente utilizada na avaliação de modelos preditivos. O R² pode ser expresso em um número entre 0 e 1, e expressa a quantidade da variância dos dados que é explicada pelo modelo. Logo, quanto mais próximo de 1, maior a quantidade de variância explicada pelo modelo.
+
+
+# 4.Supondo um apartamento com as sequintes características (características descritas no arquivo que descreve o desafio):
+# Qual seria a sua sugestão de preço?
+225,1202.
+
 
