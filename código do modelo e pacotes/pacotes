@@ -1,0 +1,19 @@
+###############################################################################
+##                          Instalação de pacotes                            ##                         
+###############################################################################
+packages <- c("dplyr", # funções de análise 
+              "PerformanceAnalytics", # funções de análise 
+              "fastDummies", # One Hot Coding 
+              "car", # funções de análise
+              "caret" , # xgbtree
+              "readr"  # leitura de arquivos .csv
+)
+if(sum(as.numeric(!packages %in% installed.packages())) != 0){
+  installer <- packages[!packages %in% installed.packages()]
+  for(i in 1:length(installer)) {
+    install.packages(installer, dependencies = T)
+    break()}
+  sapply(packages, require, character = T) 
+} else {
+  sapply(packages, require, character = T) 
+}
