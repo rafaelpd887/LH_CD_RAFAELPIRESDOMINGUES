@@ -5,7 +5,7 @@ Este diretório contém arquivos relacionados ao desafio Lighthouse da Indicium.
   
 - EDA e hipóteses de negócio podem ser encontrados em “análises estatísticas e EDA” podem ser encontrados no readme.md dentro da pasta "EDA e Hipóteses de Negócio".
   
-- O arquivo contendo o modelo desenvolvido (xgbtree.rdata) pode ser baixado pelo link no readme.md da pasta "Modelo".
+- O arquivo contendo o modelo desenvolvido (xgbtree.rdata) pode ser baixado [aqui](https://drive.google.com/file/d/1PD8bEIlNgQxHZXGApU667fpE2UEhugYM/view?usp=sharing). Também é possivel fazer o download do modelo por um link disponível no readme.md da pasta "Modelo".  
 
 # Como instalar e executar o projeto? 
 
