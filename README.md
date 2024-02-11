@@ -14,3 +14,5 @@ O desafio foi realizado usando a linguagem R através da IDE “RStudio”. Para
 O arquivo contendo o modelo desenvolvido (xgbtree.rdata) também pode ser carregado em uma IDE compatível com a linguagem R.
 
 Após baixar o arquivo .rdata contendo o modelo, basta carregá-lo usando 'load("xgbtree.rdata")' na IDE.
+
+PS: Devido ao limite de 25mb para upload de arquivos do github, não foi possível fazer upload do modelo neste diretório. Para contornar a situação, o upload foi feito no google drive e o arquivo pode ser acessado através dos links disponiveis neste diretorio. O download do arquivo do modelo é seguro e não contém vírus!
